@@ -18,10 +18,12 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 @Table(name="USER")
 public class User {
@@ -32,12 +34,12 @@ public class User {
 	@Size(min=2, max=20, message="min 2 and max 20 character allowed!!")
 	private String name;
 	@Column(unique = true)
+	@NotBlank(message="email field is required!!")
 	private String email;
+	@NotBlank(message="password field is required!!")
 	private String password;
 	private String role;
 	private boolean enabled;
-	@Column(length=500)
-	private String about;
 	private String imageUrl;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
