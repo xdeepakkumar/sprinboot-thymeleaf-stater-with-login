@@ -8,11 +8,54 @@
   <body>
   	
   	<section class="mt-5">
-  		<div class="text-center" style="margin-top:100px;">
-  			<h1>Welcome To Smart Contact Manager</h1>
-	  		<p>A TODO App For Maintaining Your Personal Data </p>
-	  		<button type="button" class="btn btn-info">Let's Start</button>
-  		</div>
+  	<div class="container">
+			<div class="row">
+				<div class="col-md-5 offset-3">
+					<div class="card">
+					  <div class="card-body">
+						   <h5 class="card-title text-center">Login Here</h5>
+						   <p class="card-subtitle mb-2 text-muted text-center">Please enter your valid details</p> <hr />
+						   
+						   <div th:if="${param.error}" class="alert alert-danger">
+	                            	Invalid username or password!!
+                            </div>
+                             <div th:if="${param.logout}" class="alert alert-success">
+                            	You have been successfully logged out!!
+                            </div>
+                            <div th:if="${param.change}" class="alert alert-success">
+                            	<p th:text="${param.change}"></p>
+                            </div>
+                            
+						   <form th:action="@{/signin}" method="POST">
+						   
+						   <!-- message showing on operation -->
+							<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert alert-dismissible fade show mt-1 pb-0" role="alert">
+							  	<p class="text-center p-0" th:text="${session.message.content}"></p>
+							  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    	<span aria-hidden="true">&times;</span>
+							  	</button>
+							</div>
+							
+							<div class="form-group">
+								<label for="email">Email address</label>
+								<input type="email" class="form-control" id="email" name="username" aria-describedby="emailHelp">
+							</div>
+							<div class="form-group">
+								<label for="password">Password</label>
+								<input type="password" class="form-control" id="password" name="password">
+							</div>
+							<div class="container text-center">
+								<button type="submit" class="btn btn-primary">Submit</button>
+								<button type="reset" class="btn btn-warning">Reset</button>
+							</div>
+						</form>
+					  </div>
+					</div>
+				
+					
+				</div>
+			</div>
+		</div>
   	</section>
   	
   </body>

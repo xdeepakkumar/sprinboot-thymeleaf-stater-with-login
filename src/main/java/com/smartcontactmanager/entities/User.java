@@ -37,6 +37,7 @@ public class User {
 	@NotBlank(message="email field is required!!")
 	private String email;
 	@NotBlank(message="password field is required!!")
+	@Size(min=6, message="min 6 character allowed!!")
 	private String password;
 	private String role;
 	private boolean enabled;

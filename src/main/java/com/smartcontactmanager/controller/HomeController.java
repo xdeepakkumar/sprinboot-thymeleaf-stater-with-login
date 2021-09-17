@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,9 @@ import com.smartcontactmanager.repository.UserRepository;
 public class HomeController {
 	
 	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
 	private UserRepository userRepository;
 	
 	@RequestMapping("/")
@@ -28,7 +32,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping("/login")
+	@RequestMapping("/signin")
 	public String signup(Model model) {
 		model.addAttribute("title", "login - Smart Contact Manager");
 		return "login";
@@ -78,6 +82,7 @@ public class HomeController {
 			}
 			user.setEnabled(true);
 			user.setRole("USER");
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			user.setImageUrl("https://bootdey.com/img/Content/avatar/avatar1.png");
 			this.userRepository.save(user);
 			model.addAttribute("user", new User());
@@ -85,7 +90,7 @@ public class HomeController {
 			return "signup";
 		} catch (Exception e) {
 			e.printStackTrace();
-			httpSession.setAttribute("message", new Message("something went wrong", "alert-danger"));
+			httpSession.setAttribute("message", new Message("Email is already exit.!", "alert-danger"));
 		}
 		model.addAttribute("user", user);
 		return "signup";
